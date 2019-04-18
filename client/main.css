@@ -1,4 +1,11 @@
 body {
-  padding: 10px;
-  font-family: sans-serif;
+	padding: 10px;
+}
+
+* {
+	font-family: Gloria Hallelujah;
+}
+
+.signin {
+	color: white;
 }
