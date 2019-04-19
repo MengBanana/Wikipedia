@@ -58,7 +58,8 @@ export default class Wikipedia extends Component {
     return this.state.history.map(l => 
       <button key={l} onClick={()=> {
         this.setState({
-          history: this.history.slice(0, this.state.history.indexOf(l))
+
+          history: this.state.history.slice(0, this.state.history.indexOf(l))
         });
         this.wiki(this.state.title);
       }}><h6><span className="badge badge-secondary">
