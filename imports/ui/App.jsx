@@ -3,6 +3,7 @@ import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
 import NavBar from "./NavBar";
 import Footer from "./Footer.jsx";
+import Flickr from "./Flickr.jsx";
 
 class App extends Component {
   render() {
@@ -10,7 +11,7 @@ class App extends Component {
       <div>
         <NavBar />
         <div className="container">
-          <h1>Welcome to Meteor!</h1>
+          <Flickr />
         </div>
         <Footer />
       </div>
