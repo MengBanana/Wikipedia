@@ -10,9 +10,11 @@ export default class Wikipedia extends Component {
       search:"",
       content:"",
       links:[],
-      history:[]
+      history:[],
+      title: ""
     };
-    // this.handleRirect = this.handleRirect.bind(this);
+    this.renderLinks = this.renderLinks.bind(this);
+    this.renderHistory = this.renderHistory.bind(this);
   }
 
   componentDidMount() {
@@ -39,7 +41,7 @@ export default class Wikipedia extends Component {
       this.setState({
         links: res.links,
         content: res.text["*"],
-        history: this.history.contact[search]
+        title: search,
       });
     });
   }
@@ -47,27 +49,34 @@ export default class Wikipedia extends Component {
   onSubmit(e) {
     e.preventDefault();
     this.setState({
-    	history: [this.state.search]
-    })
+      history: [this.state.search]
+    });
     this.wiki(this.state.search);
   }
 
- /* handleRirect(redirect){
-  	this.setState({
-  		search:redirect
-  	})
-  	this.wiki(this.state.search);
-  }*/
+  renderHistory() {
+    return this.state.history.map(l => 
+      <button key={l} onClick={()=> {
+        this.setState({
+          history: this.history.slice(0, this.state.history.indexOf(l))
+        });
+        this.wiki(this.state.title);
+      }}><h6><span className="badge badge-secondary">
+          {l}</span></h6></button>);
+
+  }
+
 
   renderLinks() {
-  	return this.state.links.slice(0,99).map(l => 
-  		<button key={l["*"]} onClick={()=> {
-  			this.setState({
-  				history:this.state.history.concat([l["*"]])
-  			});
-  			this.wiki(l["*"]);
-  		}}><h6><span className="badge badge-secondary">
-  		{l["*"]}</span></h6></button>);
+    return this.state.links.slice(0,99).map(l => 
+      <button key={l["*"]} onClick={()=> {
+        this.setState({
+          title:l["*"],
+          history: [...this.state.history, this.state.title]
+        });
+        this.wiki(l["*"]);
+      }}><h6><span className="badge badge-secondary">
+          {l["*"]}</span></h6></button>);
   }
 
   render() {
@@ -81,17 +90,17 @@ export default class Wikipedia extends Component {
           </div>
           <button type="submit" className="btn btn-warning" onClick={this.onSubmit.bind(this)}>Submit</button>
         </form>
-        <div className="history container">
+        <div className="history container part">
           <h1>History</h1>
-          {this.state.history.slice(0,99).map(l => <h6 key={l["*"]}><span className="badge badge-secondary">{l["*"]}</span></h6>)}
+          {this.renderHistory()}
         </div>
         
-        <div className="links container">
+        <div className="links container part">
           <h1>Links</h1>
           {this.renderLinks()}
         </div>
-        <div className="content container">
-          <h1>Content: {this.state.search}</h1>
+        <div className="content container part">
+          <h1>Content: {this.state.title}</h1>
           <span dangerouslySetInnerHTML={{__html: this.state.content}}></span>
         </div>
       </div>
