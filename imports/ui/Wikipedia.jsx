@@ -49,7 +49,7 @@ export default class Wikipedia extends Component {
   onSubmit(e) {
     e.preventDefault();
     this.setState({
-      history: [this.state.search]
+      // history: [this.state.search]
     });
     this.wiki(this.state.search);
   }
