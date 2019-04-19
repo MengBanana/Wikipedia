@@ -6,10 +6,10 @@ if (Meteor.isServer) {
 
   Meteor.methods({
 
-    "getwiki"() {
+    "getwiki"(term) {
       var wikipedia = require("node-wikipedia");
       return new Promise((resolve, reject) => {
-        wikipedia.page.data("Austin Sarat", { content: true }, resolve);
+        wikipedia.page.data(term, { content: true }, resolve);
       });
     }
   });  
