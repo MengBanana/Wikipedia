@@ -18,9 +18,9 @@ if (Meteor.isServer) {
   });*/
 
   Meteor.methods({
-    "getData"() {
+    "getData"(search) {
       return axios
-        .get("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9b839194d31fa92107cbb9bd8994c792&text=cat&format=json&nojsoncallback=1")
+        .get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=491c766aeebbdf4c9c3b276591632e2c&text=${search.search}&sort=relevance&format=json&nojsoncallback=1`)
         .then(data => data.data);
     }
   });
