@@ -9,7 +9,7 @@ export default class Flickr extends Component {
     this.state = {
       photos:[],
       err:"", 
-      search:"rainbow"
+      search:"car"
     };
   }
 
@@ -47,7 +47,7 @@ export default class Flickr extends Component {
       }
       console.log("got data", res);
       this.setState({
-        photos: res.photos.photo
+        photos: res
       });
     });
   }
@@ -62,12 +62,15 @@ export default class Flickr extends Component {
   }
 
   renderPhotos() {
-    return this.state.photos.map(p =>
+    if (this.state.photos === []) {
+      return;
+    }
+    return this.state.photos.map(a => a.photos.photo.slice(0, 28).map(p =>
       <img
         key={p.id}
         src={this.getURL(p)}
         alt={p.title}
-      />);
+      />));
   }
 
   render() {
@@ -78,19 +81,11 @@ export default class Flickr extends Component {
       <div>
         { this.state.err ? <div>Error! {this.state.err}</div> : ""}
         <h1>Flickr</h1>
-        {/*<form onSubmit={this.onSubmit.bind(this)} className="search-field">
-          <input
-            id="search"
-            className=""
-            type="text"
-            placeholder="Search..."
-            aria-label="Search"
-          />
-        </form>*/}
         <form>
           <div className="form-group">
             <label htmlFor="search">Search...</label>
-            <input type="text" className="form-control" id="search" placeholder="rainbow" onChange= {this.onChange.bind(this)} />
+            <input type="text" className="form-control" id="search" placeholder="car" onChange= {this.onChange.bind(this)} />
+            <small id="searchHelp" className="form-text text-muted">Search and get rainbow~~~</small>
           </div>
           <button type="submit" className="btn btn-warning" onClick={this.onSubmit.bind(this)}>Submit</button>
         </form>
